@@ -14,6 +14,10 @@ using namespace std;
 // System variables
 int Key;
 
+const char* Player = "@";
+int x = 0;
+int y = 0;
+
 // "Game" config
 const char* GameTitle = "RPGii Engine - Tests!";
 
@@ -72,19 +76,51 @@ void ParseKeys()
 		
 		/* Movement and actions */
 		case 119: // W
-			// Nothing yet
+			if(y > 0){
+			 MoveCur(x, y);
+			  cout << " ";
+			 
+			 y--;
+			 
+			 MoveCur(x, y);
+			  cout << Player;
+			}
 		break;
 		
 		case 115: // S
-			// Nothing yet
+			if(y < 28){
+			 MoveCur(x, y);
+			  cout << " ";
+			 
+			 y++;
+			 
+			 MoveCur(x, y);
+			  cout << Player;
+			}
 		break;
 		
 		case 97: // A
-			// Nothing yet
+			if(x > 0){
+			 MoveCur(x, y);
+			  cout << " ";
+			 
+			 x--;
+			 
+			 MoveCur(x, y);
+			  cout << Player;
+			}
 		break;
 		
 		case 100: // D
-			// Nothing yet
+			if(x < 79){
+			 MoveCur(x, y);
+			  cout << " ";
+			 
+			 x++;
+			 
+			 MoveCur(x, y);
+			  cout << Player;
+			}
 		break;
 	}
 }
@@ -96,12 +132,15 @@ int main()
 	
 	DrawGUI();
 	
+	MoveCur(0,0);
+	cout << Player;
+	
 	while(Key != 113)
 	{
 		if(kbhit()){Key = getch(); ParseKeys();}
 		
-		MoveCur(0,0);
-		Sleep(100);
+		MoveCur(79,0);
+		Sleep(50);
 	}
 	return 0;
 }
