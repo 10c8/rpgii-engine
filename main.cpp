@@ -18,7 +18,6 @@ int Key;
 char CurMap[19][79];
 char* CurMapName;
 
-const char* Player = "@";
 int x = 1;
 int y = 1;
 
@@ -35,24 +34,24 @@ const char* GameTitle = "RPGii Engine - Development Version";
 /* Game Tiles */
 void CurMap_tTestCity();
 char tTestCity[19][59] = {"##########################################################",
-						 "#                                                        #",
-					  	 "#                                                        #",
-					  	 "#                                                        #",
-					 	 "#                                                        #",
-					 	 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "#                                                        #",
-						 "##########################################################"};
+						  "#                                                        #",
+					  	  "#                                                        #",
+					  	  "#                                                        #",
+					 	  "#                                                        #",
+					 	  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "#                                                        #",
+						  "##########################################################"};
 
 char tGUI[25][80] = {"                                                           +------------------+",
 					 "                                                           |                  |",
@@ -221,7 +220,7 @@ void ParseKeys()
 			y--;
 			 
 			MoveCur(x,y);
-			 cout << Player;
+			 cout << (char)001;
 		break;
 		
 		case 115: // S
@@ -233,7 +232,7 @@ void ParseKeys()
 			y++;
 			 
 			MoveCur(x,y);
-			 cout << Player;
+			 cout << (char)001;
 		break;
 		
 		case 97: // A
@@ -245,7 +244,7 @@ void ParseKeys()
 			x--;
 			 
 			MoveCur(x,y);
-			 cout << Player;
+			 cout << (char)001;
 		break;
 		
 		case 100: // D
@@ -257,7 +256,7 @@ void ParseKeys()
 			x++;
 			 
 			MoveCur(x,y);
-			 cout << Player;
+			 cout << (char)001;
 		break;
 	}
 }
@@ -274,12 +273,11 @@ int main()
 	
 	MoveCur(x,y);
 	 Colous(7);
-	 cout << Player;
+	 cout << (char)001;
 	
 	while(Key != 113)
 	{
 		GUIInfo();
-		CurMap_tTestCity();
 		
 		if(kbhit()){Key = getch(); ParseKeys();}
 		
@@ -289,7 +287,7 @@ int main()
 	return 0;
 }
 
-/* CurMap functions */
+/* Tile functions */
 void CurMap_tTestCity()
 {
 	CurMapName = " Aurora Village";
