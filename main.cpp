@@ -14,19 +14,41 @@ using namespace std;
 
 // System variables
 int Key;
+char CurMap[19][79];
 
 const char* Player = "@";
-int x = 0;
-int y = 0;
+int x = 1;
+int y = 1;
+
+int pHP = 100;
+int pMP = 100;
+int pAtk = 10;
+int pDef = 10;
+int pExp = 0;
+int pLvl = 1;
 
 // "Game" config
 const char* GameTitle = "RPGii Engine - Development Version";
 
 /* Game Tiles */
+void CurMap_tTestCity();
+char tTestCity[19][79] = {"##################################################",
+						  "#      #                                         #",
+						  "#                                                #",
+						  "########                                         #",
+						  "#                                                #",
+						  "#                                                #",
+						  "#                                                #",
+						  "#                                                #",
+						  "#                                                #",
+						  "#                                                #",
+						  "#                                                #",
+						  "##################################################"};
+
 char tGUI[6][60] = {"+---------------------------------------------------------+",
 				    "| RPGii Engine | [E]quipment [I]nventory [M]inimap [Q]uit |",
 				    "+---------------------------------------------------------+",
-                    "| HP: 100 | MP: 100 | Atk/Def: 01/01 | Exp: 000 | Lvl: 01 |",
+                    "| HP:     | MP:     | Atk/Def:   /   | Exp:     | Lvl:    |",
                     "+---------------------------------------------------------+"};
 
 /* Main engine code */
@@ -44,6 +66,70 @@ void Colous(int cO)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), cO);
 }
 
+void DrawMap()
+{
+	MoveCur(0,0);
+	
+	for(int i = 0; i < 19; i++)
+	{
+		for(int j = 0; j < 79; j++)
+		{
+			switch(CurMap[i][j])
+			{
+				case '#':
+					MoveCur(j,i);
+                     cout << (char)178;
+				break;
+			}
+		}
+	}
+}
+
+void DrawMapArray()
+{
+	MoveCur(0,0);
+	
+	for(int i = 0; i < 19; i++)
+	{
+		for(int j = 0; j < 79; j++)
+		{
+			cout << CurMap[i][j];
+		}
+		cout << endl;
+	}
+	
+	DrawMap();
+}
+
+void GUIInfo()
+{
+	MoveCur(6,23);
+	 Colous(10);
+	 cout << pHP; // Health
+	 
+	MoveCur(16,23);
+	 Colous(9);
+	 cout << pMP; // Mana
+	
+	MoveCur(31,23);
+	 Colous(8);
+	 cout << pAtk; // Attack Points
+	
+	MoveCur(34,23);
+	 Colous(8);
+	 cout << pDef; // Defense Points
+	
+	MoveCur(44,23);
+	 Colous(3);
+	 cout << pExp; // Experience Points
+	 
+	MoveCur(55,23);
+	 Colous(2);
+	 cout << pLvl; // Player Level
+	 
+	Colous(7);
+}
+
 void DrawGUI()
 {
 	MoveCur(0,20);
@@ -56,6 +142,8 @@ void DrawGUI()
 		}
 		cout << endl;
 	}
+	
+	GUIInfo();
 }
 
 void ParseKeys()
@@ -77,51 +165,51 @@ void ParseKeys()
 		
 		/* Movement and actions */
 		case 119: // W
-			if(y > 0){
-			 MoveCur(x, y);
-			  cout << " ";
+			if(CurMap[y-1][x] == '#') break;
+			
+			MoveCur(x,y);
+			 cout << " ";
 			 
-			 y--;
+			y--;
 			 
-			 MoveCur(x, y);
-			  cout << Player;
-			}
+			MoveCur(x,y);
+			 cout << Player;
 		break;
 		
 		case 115: // S
-			if(y < 19){
-			 MoveCur(x, y);
-			  cout << " ";
+			if(CurMap[y+1][x] == '#') break;
+			
+			MoveCur(x,y);
+			 cout << " ";
 			 
-			 y++;
+			y++;
 			 
-			 MoveCur(x, y);
-			  cout << Player;
-			}
+			MoveCur(x,y);
+			 cout << Player;
 		break;
 		
 		case 97: // A
-			if(x > 0){
-			 MoveCur(x, y);
-			  cout << " ";
+			if(CurMap[y][x-1] == '#') break;
+			
+			MoveCur(x,y);
+			 cout << " ";
 			 
-			 x--;
+			x--;
 			 
-			 MoveCur(x, y);
-			  cout << Player;
-			}
+			MoveCur(x,y);
+			 cout << Player;
 		break;
 		
 		case 100: // D
-			if(x < 79){
-			 MoveCur(x, y);
-			  cout << " ";
+			if(CurMap[y][x+1] == '#') break;
+			
+			MoveCur(x,y);
+			 cout << " ";
 			 
-			 x++;
+			x++;
 			 
-			 MoveCur(x, y);
-			  cout << Player;
-			}
+			MoveCur(x,y);
+			 cout << Player;
 		break;
 	}
 }
@@ -131,17 +219,36 @@ int main()
 {
 	SetConsoleTitle(GameTitle);
 	
+	CurMap_tTestCity();
+	
+	DrawMapArray();
 	DrawGUI();
 	
-	MoveCur(0,0);
-	cout << Player;
+	MoveCur(x,y);
+	 Colous(7);
+	 cout << Player;
 	
 	while(Key != 113)
 	{
+		GUIInfo();
+		 
 		if(kbhit()){Key = getch(); ParseKeys();}
 		
 		MoveCur(79,0);
 		Sleep(50);
 	}
 	return 0;
+}
+
+/* CurMap functions */
+void CurMap_tTestCity()
+{
+	for(int i = 0; i < 19; i++)
+	{
+		for(int j = 0; j < 79; j++)
+		{
+			CurMap[i][j] = tTestCity[i][j];
+		}
+	
+	}
 }
