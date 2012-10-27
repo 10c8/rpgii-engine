@@ -11,17 +11,19 @@
 
 using namespace std;
 
-//System variables
+// System variables
 int Key;
 
-//"Game" config
+// "Game" config
 const char* GameTitle = "RPGii Engine - Tests!";
 
+/* Main engine code */
 void MoveCur(int cX, int cY)
 {
 	COORD CurPos;
 	CurPos.X = cX;
 	CurPos.Y = cY;
+	
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), CurPos);
 }
 
@@ -44,7 +46,7 @@ int main()
 	
     while(Key != 27)
     {
-		if(kbhit()){ Key = getch(); ParseKeys();}
+		if(kbhit()){Key = getch(); ParseKeys();}
 		
 		MoveCur(0,0);
 		Sleep(100);
@@ -52,7 +54,7 @@ int main()
     return 0;
 }
 
-// The testing area! :D
+/* The testing area! :D */
 void DoTest()
 {
 	MoveCur(20, 8);
