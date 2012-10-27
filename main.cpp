@@ -89,7 +89,7 @@ void ParseKeys()
 		break;
 		
 		case 115: // S
-			if(y < 28){
+			if(y < 19){
 			 MoveCur(x, y);
 			  cout << " ";
 			 
