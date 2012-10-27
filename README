@@ -1,0 +1,10 @@
+RPGii is a ASCII-based open-source RPG (not roguelike) game engine that features (well, in the future versions):
+- Colors!
+- Quests!
+- Dungeons!
+- Monsters!
+- NPC villages and cities!
+- And... Bosses! >:D (maybe more things, I don't know)
+
+This project still just a concept, but with some time and work it can be a great engine! :D
+It's main coded in pure C++, but it can use some frameworks (maybe, but still being ASCII-based).
