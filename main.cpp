@@ -20,7 +20,7 @@ int x = 0;
 int y = 0;
 
 // "Game" config
-const char* GameTitle = "RPGii Engine - Tests!";
+const char* GameTitle = "RPGii Engine - Development Version";
 
 /* Game Tiles */
 char tGUI[6][60] = {"+---------------------------------------------------------+",
