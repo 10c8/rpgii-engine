@@ -2,7 +2,7 @@
  * RPGii Engine
  * ASCII-based open-source RPG game engine
  *
- * @version 0.0.01
+ * @version 0.0.02
  * @copyright GPL (c) 2007
 **/
 
@@ -14,7 +14,9 @@ using namespace std;
 
 // System variables
 int Key;
+
 char CurMap[19][79];
+char* CurMapName;
 
 const char* Player = "@";
 int x = 1;
@@ -32,24 +34,51 @@ const char* GameTitle = "RPGii Engine - Development Version";
 
 /* Game Tiles */
 void CurMap_tTestCity();
-char tTestCity[19][79] = {"##################################################",
-						  "#      #                                         #",
-						  "#                                                #",
-						  "########                                         #",
-						  "#                                                #",
-						  "#                                                #",
-						  "#                                                #",
-						  "#                                                #",
-						  "#                                                #",
-						  "#                                                #",
-						  "#                                                #",
-						  "##################################################"};
+char tTestCity[19][59] = {"##########################################################",
+						 "#                                                        #",
+					  	 "#                                                        #",
+					  	 "#                                                        #",
+					 	 "#                                                        #",
+					 	 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "#                                                        #",
+						 "##########################################################"};
 
-char tGUI[6][60] = {"+---------------------------------------------------------+",
-				    "| RPGii Engine | [E]quipment [I]nventory [M]inimap [Q]uit |",
-				    "+---------------------------------------------------------+",
-                    "| HP:     | MP:     | Atk/Def:   /   | Exp:     | Lvl:    |",
-                    "+---------------------------------------------------------+"};
+char tGUI[25][80] = {"                                                           +------------------+",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           +------------------+",
+					 "                                                           |                  |",
+					 "                                                           +------------------+",
+                     "                                                           +------------------+",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "                                                           |                  |",
+					 "+---------------------------------------------------------+|                  |",
+				     "| RPGii Engine | [ ]quipment [ ]nventory [ ]inimap [ ]uit ||                  |",
+				     "+---------------------------------------------------------+|                  |",
+                     "| HP:     | MP:     | Atk/Def:   /   | Exp:     | Lvl:    ||                  |",
+                     "+---------------------------------------------------------++------------------+"};
 
 /* Main engine code */
 void MoveCur(int cX, int cY)
@@ -72,7 +101,7 @@ void DrawMap()
 	
 	for(int i = 0; i < 19; i++)
 	{
-		for(int j = 0; j < 79; j++)
+		for(int j = 0; j < 58; j++)
 		{
 			switch(CurMap[i][j])
 			{
@@ -91,7 +120,7 @@ void DrawMapArray()
 	
 	for(int i = 0; i < 19; i++)
 	{
-		for(int j = 0; j < 79; j++)
+		for(int j = 0; j < 58; j++)
 		{
 			cout << CurMap[i][j];
 		}
@@ -132,17 +161,36 @@ void GUIInfo()
 
 void DrawGUI()
 {
-	MoveCur(0,20);
+	MoveCur(0,0);
 	
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < 25; i++)
 	{
-		for(int j = 0; j < 60; j++)
+		for(int j = 0; j < 79; j++)
 		{
 			cout << tGUI[i][j];
 		}
 		cout << endl;
 	}
+	MoveCur(61,12);
+	 Colous(7);
+	 cout << CurMapName; // Name of the current map
+	 
+	MoveCur(18,21);
+	 Colous(2);
+	 cout << "E"; // [E]quipment decoration
 	
+	MoveCur(30,21);
+	 Colous(2);
+	 cout << "I"; // [I]nventory decoration
+	 
+	MoveCur(42,21);
+	 Colous(2);
+	 cout << "M"; // [M]inimap decoration
+	 
+	MoveCur(52,21);
+	 Colous(4);
+	 cout << "Q"; // [Q]uit decoration
+	 
 	GUIInfo();
 }
 
@@ -221,8 +269,8 @@ int main()
 	
 	CurMap_tTestCity();
 	
-	DrawMapArray();
 	DrawGUI();
+	DrawMapArray();
 	
 	MoveCur(x,y);
 	 Colous(7);
@@ -231,7 +279,8 @@ int main()
 	while(Key != 113)
 	{
 		GUIInfo();
-		 
+		CurMap_tTestCity();
+		
 		if(kbhit()){Key = getch(); ParseKeys();}
 		
 		MoveCur(79,0);
@@ -243,6 +292,8 @@ int main()
 /* CurMap functions */
 void CurMap_tTestCity()
 {
+	CurMapName = " Aurora Village";
+	
 	for(int i = 0; i < 19; i++)
 	{
 		for(int j = 0; j < 79; j++)
