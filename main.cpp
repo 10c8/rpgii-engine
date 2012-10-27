@@ -9,17 +9,27 @@
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
+#include <stdlib.h>
 
 using namespace std;
 
 // System variables
 int Key;
 
+int RandomDirection;
+int MoveUp = 1;
+int MoveDown = 1;
+int MoveLeft = 1;
+int MoveRight = 1;
+
 char CurMap[19][79];
 char* CurMapName;
 
-int x = 1;
-int y = 1;
+int PlayerX = 1;
+int PlayerY = 1;
+
+int NPCX_One = 13;
+int NPCY_One = 7;
 
 int pHP = 100;
 int pMP = 100;
@@ -193,6 +203,8 @@ void DrawGUI()
 	GUIInfo();
 }
 
+void DrawNPC_VillagerOne();
+
 void ParseKeys()
 {
 	switch(Key)
@@ -212,50 +224,50 @@ void ParseKeys()
 		
 		/* Movement and actions */
 		case 119: // W
-			if(CurMap[y-1][x] == '#') break;
+			if(CurMap[PlayerY-1][PlayerX] == '#') break;
 			
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << " ";
 			 
-			y--;
+			PlayerY--;
 			 
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << (char)001;
 		break;
 		
 		case 115: // S
-			if(CurMap[y+1][x] == '#') break;
+			if(CurMap[PlayerY+1][PlayerX] == '#') break;
 			
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << " ";
 			 
-			y++;
+			PlayerY++;
 			 
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << (char)001;
 		break;
 		
 		case 97: // A
-			if(CurMap[y][x-1] == '#') break;
+			if(CurMap[PlayerY][PlayerX-1] == '#') break;
 			
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << " ";
 			 
-			x--;
+			PlayerX--;
 			 
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << (char)001;
 		break;
 		
 		case 100: // D
-			if(CurMap[y][x+1] == '#') break;
+			if(CurMap[PlayerY][PlayerX+1] == '#') break;
 			
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << " ";
 			 
-			x++;
+			PlayerX++;
 			 
-			MoveCur(x,y);
+			MoveCur(PlayerX,PlayerY);
 			 cout << (char)001;
 		break;
 	}
@@ -267,22 +279,27 @@ int main()
 	SetConsoleTitle(GameTitle);
 	
 	CurMap_tTestCity();
-	
+	 
 	DrawGUI();
 	DrawMapArray();
 	
-	MoveCur(x,y);
+	MoveCur(PlayerX,PlayerY);
 	 Colous(7);
 	 cout << (char)001;
 	
+	MoveCur(NPCX_One,NPCY_One);
+	 Colous(7);
+	 cout << "@";
+	
 	while(Key != 113)
 	{
+		DrawNPC_VillagerOne();
 		GUIInfo();
 		
 		if(kbhit()){Key = getch(); ParseKeys();}
 		
 		MoveCur(79,0);
-		Sleep(50);
+		Sleep(100);
 	}
 	return 0;
 }
@@ -299,5 +316,74 @@ void CurMap_tTestCity()
 			CurMap[i][j] = tTestCity[i][j];
 		}
 	
+	}
+}
+
+void DrawNPC_VillagerOne()
+{
+	RandomDirection = rand() % 6;
+	
+	switch(RandomDirection){
+		case 0: // No movement and time to randomize the next move
+			MoveUp = rand() % 2;
+			MoveDown = rand() % 2;
+			MoveLeft = rand() % 2;
+			MoveRight = rand() % 2;
+		break;
+		
+		case 1: // Simply nothing
+		break;
+		
+		case 2: // Up
+			if(CurMap[NPCY_One-1][NPCX_One] == '#') break;
+			if(MoveUp == 0) break;
+			
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << " ";
+			 
+			NPCY_One--;
+			 
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << "M";
+		break;
+		
+		case 3: // Down
+			if(CurMap[NPCY_One+1][NPCX_One] == '#') break;
+			if(MoveDown == 0) break;
+			
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << " ";
+			 
+			NPCY_One++;
+			 
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << "M";
+		break;
+		
+		case 4: // Left
+			if(CurMap[NPCY_One][NPCX_One-1] == '#') break;
+			if(MoveLeft == 0) break;
+			
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << " ";
+			 
+			NPCX_One--;
+			 
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << "M";
+		break;
+		
+		case 5: // Right
+			if(CurMap[NPCY_One][NPCX_One+1] == '#') break;
+			if(MoveRight == 0) break;
+			
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << " ";
+			 
+			NPCX_One++;
+			 
+			MoveCur(NPCX_One,NPCY_One);
+			 cout << "M";
+		break;
 	}
 }
