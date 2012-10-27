@@ -7,4 +7,4 @@ RPGii is an ASCII-based open-source RPG (not roguelike) game engine that feature
 - And... Bosses! >:D (maybe more things, I don't know)
 
 This project still just a concept, but with some time and work it can be a great engine! :D
-It's main coded in pure C++, but it can use some frameworks (maybe, but still being ASCII-based).
+It's mainly coded in pure C++, but it can use some framework maybe in the future (but still being ASCII-based!).
