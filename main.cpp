@@ -2,6 +2,7 @@
  * RPGii Engine
  * ASCII-based open-source RPG game engine
  *
+ * @version 0.0.01
  * @copyright GPL (c) 2007
 **/
 
@@ -125,7 +126,7 @@ void ParseKeys()
 	}
 }
 
-void DoTest();
+/* Engine "boot" */
 int main()
 {
 	SetConsoleTitle(GameTitle);
@@ -143,17 +144,4 @@ int main()
 		Sleep(50);
 	}
 	return 0;
-}
-
-/* The testing area! :D */
-void DoTest()
-{
-	MoveCur(20, 8);
-	 cout << "Testing the MoveCur function.";
-	MoveCur(12, 17);
-	 Colous(1); cout << "Testing ";
-	 Colous(2); cout << "now ";
-	 Colous(3); cout << "Colous ";
-	 Colous(4);	cout << "function ";
-	 Colous(5); cout << "too.";
 }
