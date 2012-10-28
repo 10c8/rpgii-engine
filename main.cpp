@@ -17,10 +17,14 @@ using namespace std;
 int Key;
 
 int RandomDirection;
-int MoveUp = 1;
-int MoveDown = 1;
-int MoveLeft = 1;
-int MoveRight = 1;
+ int MoveUp = 0;
+ int MoveDown = 0;
+ int MoveLeft = 0;
+ int MoveRight = 0;
+ int MoveURange = 2;
+ int MoveDRange = 2;
+ int MoveLRange = 2;
+ int MoveRRange = 2;
 
 char CurMap[19][79];
 char* CurMapName;
@@ -272,7 +276,7 @@ void ParseKeys()
 		break;
 	}
 }
-
+	
 /* Engine "boot" */
 int main()
 {
@@ -289,7 +293,7 @@ int main()
 	
 	MoveCur(NPCX_One,NPCY_One);
 	 Colous(7);
-	 cout << "@";
+	 cout << "M";
 	
 	while(Key != 113)
 	{
@@ -325,10 +329,10 @@ void DrawNPC_VillagerOne()
 	
 	switch(RandomDirection){
 		case 0: // No movement and time to randomize the next move
-			MoveUp = rand() % 2;
-			MoveDown = rand() % 2;
-			MoveLeft = rand() % 2;
-			MoveRight = rand() % 2;
+			MoveUp = rand() % MoveURange;
+			MoveDown = rand() % MoveDRange;
+			MoveLeft = rand() % MoveLRange;
+			MoveRight = rand() % MoveRRange;
 		break;
 		
 		case 1: // Simply nothing
