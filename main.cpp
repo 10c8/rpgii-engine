@@ -212,6 +212,12 @@ void DrawGUI()
 	GUIInfo();
 }
 
+void DrawPlayer()
+{
+	MoveCur(PlayerX,PlayerY);
+	 cout << (char)001;
+}
+
 void ParseKeys()
 {
 	switch(Key)
@@ -293,9 +299,7 @@ int main()
 	DrawGUI();
 	DrawMapArray();
 	
-	MoveCur(PlayerX,PlayerY);
-	 Colous(7);
-	 cout << (char)001;
+	DrawPlayer();
 	
 	SetNPC(NPCX_One, NPCY_One, 3);
 
