@@ -333,6 +333,14 @@ void NPC_MoveDown();
 void NPC_MoveLeft();
 void NPC_MoveRight();
 
+bool NPC_Check()
+{
+	if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) return 1; // Player is above NPC
+	if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) return 1; // NPC is above Player
+	if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) return 1; // Player is in left side of NPC
+	if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) return 1; // Player is in right side of NPC
+}
+
 void SetNPC(int NPX, int NPY, int Color){
 	CurNPCX = NPX;
 	CurNPCY = NPY;
@@ -359,10 +367,7 @@ void DrawNPC()
 		break;
 		
 		case 2: // Up
-			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
-			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
-			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
-			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
+			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY-1][CurNPCX] == '#') /*NPC_MoveDown();*/ break;
 			if(MoveUp == 1) break;
@@ -370,10 +375,7 @@ void DrawNPC()
 		break;
 		
 		case 3: // Down
-			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
-			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
-			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
-			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
+			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY+1][CurNPCX] == '#') /*NPC_MoveUp();*/ break;
 			if(MoveDown == 1) break;
@@ -381,10 +383,7 @@ void DrawNPC()
 		break;
 		
 		case 4: // Left
-			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
-			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
-			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
-			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
+			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY][CurNPCX-1] == '#') /*NPC_MoveRight();*/ break;
 			if(MoveLeft == 1) break;
@@ -392,10 +391,7 @@ void DrawNPC()
 		break;
 		
 		case 5: // Right
-			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
-			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
-			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
-			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
+			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY][CurNPCX+1] == '#') /*NPC_MoveLeft();*/ break;
 			if(MoveRight == 1) break;
