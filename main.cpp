@@ -2,19 +2,24 @@
  * RPGii Engine
  * ASCII-based open-source RPG game engine
  *
- * @version 0.0.02
+ * @version 0.0.03
  * @copyright GPL (c) 2007
 **/
 
 #include <iostream>
+using namespace std;
+
 #include <windows.h>
 #include <conio.h>
 #include <stdlib.h>
 
-using namespace std;
-
 // System variables
 int Key;
+
+char* CurNPCName;
+int CurNPCX;
+int CurNPCY;
+int CurNPCColor;
 
 int RandomDirection;
  int MoveUp = 0;
@@ -207,8 +212,6 @@ void DrawGUI()
 	GUIInfo();
 }
 
-void DrawNPC_VillagerOne();
-
 void ParseKeys()
 {
 	switch(Key)
@@ -278,12 +281,15 @@ void ParseKeys()
 }
 	
 /* Engine "boot" */
+void SetNPC(int NPX, int NPY, int Color);
+void DrawNPC();
+
 int main()
 {
 	SetConsoleTitle(GameTitle);
 	
 	CurMap_tTestCity();
-	 
+	
 	DrawGUI();
 	DrawMapArray();
 	
@@ -291,13 +297,11 @@ int main()
 	 Colous(7);
 	 cout << (char)001;
 	
-	MoveCur(NPCX_One,NPCY_One);
-	 Colous(7);
-	 cout << "M";
-	
+	SetNPC(NPCX_One, NPCY_One, 3);
+
 	while(Key != 113)
 	{
-		DrawNPC_VillagerOne();
+		DrawNPC();
 		GUIInfo();
 		
 		if(kbhit()){Key = getch(); ParseKeys();}
@@ -323,10 +327,26 @@ void CurMap_tTestCity()
 	}
 }
 
-void DrawNPC_VillagerOne()
+/* NPC Functions */
+void NPC_MoveUp();
+void NPC_MoveDown();
+void NPC_MoveLeft();
+void NPC_MoveRight();
+
+void SetNPC(int NPX, int NPY, int Color){
+	CurNPCX = NPX;
+	CurNPCY = NPY;
+	CurNPCColor = Color;
+	
+	MoveCur(NPX,NPY);
+	 Colous(Color);
+	 cout << "@";
+}
+
+void DrawNPC()
 {
 	RandomDirection = rand() % 6;
-	
+		
 	switch(RandomDirection){
 		case 0: // No movement and time to randomize the next move
 			MoveUp = rand() % MoveURange;
@@ -339,55 +359,95 @@ void DrawNPC_VillagerOne()
 		break;
 		
 		case 2: // Up
-			if(CurMap[NPCY_One-1][NPCX_One] == '#') break;
-			if(MoveUp == 0) break;
+			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
+			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
+			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
+			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
 			
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << " ";
-			 
-			NPCY_One--;
-			 
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << "M";
+			if(CurMap[CurNPCY-1][CurNPCX] == '#') /*NPC_MoveDown();*/ break;
+			if(MoveUp == 1) break;
+			NPC_MoveUp();
 		break;
 		
 		case 3: // Down
-			if(CurMap[NPCY_One+1][NPCX_One] == '#') break;
-			if(MoveDown == 0) break;
+			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
+			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
+			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
+			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
 			
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << " ";
-			 
-			NPCY_One++;
-			 
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << "M";
+			if(CurMap[CurNPCY+1][CurNPCX] == '#') /*NPC_MoveUp();*/ break;
+			if(MoveDown == 1) break;
+			NPC_MoveDown();
 		break;
 		
 		case 4: // Left
-			if(CurMap[NPCY_One][NPCX_One-1] == '#') break;
-			if(MoveLeft == 0) break;
+			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
+			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
+			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
+			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
 			
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << " ";
-			 
-			NPCX_One--;
-			 
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << "M";
+			if(CurMap[CurNPCY][CurNPCX-1] == '#') /*NPC_MoveRight();*/ break;
+			if(MoveLeft == 1) break;
+			NPC_MoveLeft();
 		break;
 		
 		case 5: // Right
-			if(CurMap[NPCY_One][NPCX_One+1] == '#') break;
-			if(MoveRight == 0) break;
+			if(CurNPCY-1 == PlayerY and CurNPCX == PlayerX) break; // Player is above NPC
+			if(CurNPCY+1 == PlayerY and CurNPCX == PlayerX) break; // NPC is above Player
+			if(CurNPCY == PlayerY and CurNPCX-1 == PlayerX) break; // Player is in left side of NPC
+			if(CurNPCY == PlayerY and CurNPCX+1 == PlayerX) break; // Player is in right side of NPC
 			
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << " ";
-			 
-			NPCX_One++;
-			 
-			MoveCur(NPCX_One,NPCY_One);
-			 cout << "M";
+			if(CurMap[CurNPCY][CurNPCX+1] == '#') /*NPC_MoveLeft();*/ break;
+			if(MoveRight == 1) break;
+			NPC_MoveRight();
 		break;
 	}
+}
+
+void NPC_MoveUp()
+{
+	MoveCur(CurNPCX,CurNPCY);
+	 cout << " ";
+ 
+	CurNPCY--;
+	 
+	MoveCur(CurNPCX,CurNPCY);
+	 Colous(CurNPCColor);
+	 cout << "@";
+}
+
+void NPC_MoveDown()
+{
+	MoveCur(CurNPCX,CurNPCY);
+	 cout << " ";
+	 
+	CurNPCY++;
+	 
+	MoveCur(CurNPCX,CurNPCY);
+	 Colous(CurNPCColor);
+	 cout << "@";
+}
+
+void NPC_MoveLeft()
+{
+	MoveCur(CurNPCX,CurNPCY);
+	 cout << " ";
+	 
+	CurNPCX--;
+	 
+	MoveCur(CurNPCX,CurNPCY);
+	 Colous(CurNPCColor);
+	 cout << "@";
+}
+
+void NPC_MoveRight()
+{
+	MoveCur(CurNPCX,CurNPCY);
+	 cout << " ";
+	 
+	CurNPCX++;
+	 
+	MoveCur(CurNPCX,CurNPCY);
+	 Colous(CurNPCColor);
+	 cout << "@";
 }
