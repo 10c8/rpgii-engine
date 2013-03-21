@@ -52,13 +52,12 @@ const char* GameTitle = "RPGii Engine - Development Version";
 
 /* Game Tiles */
 void CurMap_tTestCity();
-char tTestCity[19][59] = {"##########################################################",
+char tTestCity[18][59] = {"##########################################################",
 						  "#                                                        #",
 					  	  "#                                                        #",
 					  	  "#                                                        #",
 					 	  "#                                                        #",
 					 	  "#                                                        #",
-						  "#                                                        #",
 						  "#                                                        #",
 						  "#                                                        #",
 						  "#                                                        #",
@@ -117,7 +116,7 @@ void DrawMap()
 {
 	MoveCur(0,0);
 	
-	for(int i = 0; i < 19; i++)
+	for(int i = 0; i < 18; i++)
 	{
 		for(int j = 0; j < 58; j++)
 		{
@@ -125,7 +124,7 @@ void DrawMap()
 			{
 				case '#':
 					MoveCur(j,i);
-                     cout << (char)178;
+                     cout << (char)219;
 				break;
 			}
 		}
@@ -136,7 +135,7 @@ void DrawMapArray()
 {
 	MoveCur(0,0);
 	
-	for(int i = 0; i < 19; i++)
+	for(int i = 0; i < 18; i++)
 	{
 		for(int j = 0; j < 58; j++)
 		{
@@ -357,7 +356,7 @@ void SetNPC(int NPX, int NPY, int Color){
 
 void DrawNPC()
 {
-	RandomDirection = rand() % 6;
+	RandomDirection = rand() % 7;
 		
 	switch(RandomDirection){
 		case 0: // No movement and time to randomize the next move
@@ -367,10 +366,7 @@ void DrawNPC()
 			MoveRight = rand() % MoveRRange;
 		break;
 		
-		case 1: // Simply nothing
-		break;
-		
-		case 2: // Up
+		case 1: // Up
 			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY-1][CurNPCX] == '#') /*NPC_MoveDown();*/ break;
@@ -378,7 +374,7 @@ void DrawNPC()
 			NPC_MoveUp();
 		break;
 		
-		case 3: // Down
+		case 2: // Down
 			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY+1][CurNPCX] == '#') /*NPC_MoveUp();*/ break;
@@ -386,7 +382,7 @@ void DrawNPC()
 			NPC_MoveDown();
 		break;
 		
-		case 4: // Left
+		case 3: // Left
 			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY][CurNPCX-1] == '#') /*NPC_MoveRight();*/ break;
@@ -394,7 +390,7 @@ void DrawNPC()
 			NPC_MoveLeft();
 		break;
 		
-		case 5: // Right
+		case 4: // Right
 			if(NPC_Check()) break;
 			
 			if(CurMap[CurNPCY][CurNPCX+1] == '#') /*NPC_MoveLeft();*/ break;
